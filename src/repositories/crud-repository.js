@@ -9,6 +9,8 @@ class CrudRepostory{
         const resp = await this.model.create(data);
         return resp;
         }catch(err){
+            // console.log(err);
+            console.log('inside crud error')
             throw new Error(err);
         }
     }

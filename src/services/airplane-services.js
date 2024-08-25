@@ -1,4 +1,5 @@
-const {AirplaneRepository} =require('../repositories')
+const {AirplaneRepository} =require('../repositories');
+const AppError = require('../utils/errors/app-error');
 
 const airplaneRepository=new AirplaneRepository();
 
@@ -6,8 +7,8 @@ async function createAirplane(data){
     try{
     const airplane=await airplaneRepository.create(data)
     return airplane;
-    }catch(err){
-        throw new Error(err);
+    }catch(error){
+        throw new AppError(error.message,400)
     }
 }
 
@@ -16,6 +17,7 @@ async function getAllAirplane(){
     const airplane=await airplaneRepository.getAll()
     return airplane;
     }catch(err){
+        
         throw new Error(err);
     }
 }
