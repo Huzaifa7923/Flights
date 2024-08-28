@@ -1,6 +1,7 @@
 const express =require('express');
 const { PORT } = require('./config/dotenv-config');
-const  apiRoutes= require('./routes')
+const  apiRoutes= require('./routes');
+const {City,Airport} = require('./models');
 
 
 const app=express();
@@ -12,7 +13,14 @@ app.use('/api',apiRoutes)
 
  
 
-app.listen(PORT,(req,res)=>{
-    console.log(PORT)
-    console.log(`listening on port 3000`)
+app.listen(PORT,async(req,res)=>{
+    console.log(`listening on port ${PORT}`)
+
+    const city = await City.create({ name: 'San Francisco' });
+
+// Create a new airport associated with the city
+const airport = await city.createAirport({
+  name: 'San Francisco International Airport',
+  code :'SFIA',
+});
 })

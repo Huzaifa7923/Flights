@@ -1,3 +1,6 @@
+const { StatusCodes } = require('http-status-codes');
+const AppError= require('../utils/errors/app-error') 
+
 class CrudRepostory{
     constructor(model){
         this.model=model
@@ -16,6 +19,9 @@ class CrudRepostory{
 
     async get(data){
         const resp = await this.model.findByPk(data);  
+        if(!resp){
+            throw new AppError('Not able to find the resource',StatusCodes.NOT_FOUND)
+        }
         return resp;
     }
 
@@ -26,6 +32,10 @@ class CrudRepostory{
                 id:data
             }
         });
+
+        if(!resp){
+            throw new AppError('Not able to find the resource to delete',StatusCodes.NOT_FOUND)
+        }
         return resp;
     }
 

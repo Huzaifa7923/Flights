@@ -25,12 +25,12 @@ async function getCities(){
 async function getCity(id){
     try{
         const resp=await cityRepository.get(id);
-        if(!resp){
-            throw new Error('City does not exist')
-        }
         return resp;
     }catch(err){
-        throw new AppError(err.message,StatusCodes.BAD_REQUEST);
+        if(err.StatusCodes == StatusCodes.NOT_FOUND){
+            throw new AppError('City you requested not found !',err.StatusCodes);
+        }
+        throw new AppError(err.message,StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 

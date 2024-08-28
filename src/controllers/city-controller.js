@@ -4,7 +4,9 @@ const {SuccessResponse,ErrorResponse}=require('../utils/common')
 
 async function createCity(req,res){
     try{
-    const city=await CityService.createCity(req.body);
+    const city=await CityService.createCity({
+        name:req.body.name
+    });
     SuccessResponse.data=city;
     res.status(StatusCodes.OK).json(SuccessResponse);
 
@@ -40,7 +42,9 @@ async function getCity(req,res){
 
 async function updateCity(req,res){
     try{
-    const city=await CityService.updateCity(req.params.id,req.body);
+    const city=await CityService.updateCity(req.params.id,{
+        name:req.body.name
+    });
     SuccessResponse.data=city;
     res.status(StatusCodes.OK).json(SuccessResponse);
 

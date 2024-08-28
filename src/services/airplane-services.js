@@ -25,30 +25,19 @@ async function getAllAirplane(){
 async function getAirplane(data){
     try{
     const airplane=await airplaneRepository.get(data)
-    if(!airplane){
-        throw new AppError('No such airplane exists',StatusCodes.NOT_FOUND);
-    }
     return airplane;
     }catch(err){
-        if(err instanceof AppError){
-            throw err;
-        }
-        throw new AppError(err.message,StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError(err.message,err.StatusCodes);
     }
 }
 
 async function deleteAirplane(data){
     try{
     const airplane=await airplaneRepository.destroy(data)
-    if(!airplane){
-        throw new AppError('No such airplane exists',StatusCodes.NOT_FOUND);
-    }
     return airplane;
+
     }catch(err){
-        if(err instanceof AppError){
-            throw err;
-        }
-        throw new AppError(err.message,StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError(err.message,err.StatusCodes);
     }
 }
 
