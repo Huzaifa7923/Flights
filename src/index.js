@@ -15,12 +15,16 @@ app.use('/api',apiRoutes)
 
 app.listen(PORT,async(req,res)=>{
     console.log(`listening on port ${PORT}`)
+    // const city=await City.findByPk(8);
+    // console.log(city)
+    // const airp1 =await city.createAirport({name:'Lucknow1',code:'Lk1'});
+    // const airp2 =await city.createAirport({name:'Lucknow2',code:'Lk2'});
 
-    const city = await City.create({ name: 'San Francisco' });
+    // const airp1=await Airport.findByPk(5);
 
-// Create a new airport associated with the city
-const airport = await city.createAirport({
-  name: 'San Francisco International Airport',
-  code :'SFIA',
-});
+    // await City.destroy({
+    //   where:{
+    //     id:8
+    //   }
+    // })
 })
