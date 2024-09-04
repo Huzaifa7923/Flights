@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const { ErrorResponse } = require("../utils/common");
 const AppError = require("../utils/errors/app-error");
 
-const validateCreateRequest=(req,res,next)=>{
+const validateAirplaneCreateRequest=(req,res,next)=>{
     console.log(req.body);
 
     if(!req.body.modelNumber){
@@ -17,4 +17,4 @@ const validateCreateRequest=(req,res,next)=>{
     next();
 }
 
-module.exports={validateCreateRequest}
+module.exports={validateAirplaneCreateRequest}
