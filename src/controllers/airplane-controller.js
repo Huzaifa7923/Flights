@@ -48,7 +48,7 @@ async function getAirplane(req,res){
         .status(StatusCodes.OK)
         .json(SuccessResponse)
     }catch(err){
-        console.log(5)
+        // console.log(5)
         ErrorResponse.error={explanation:err.explanation,statusCode:err.statusCode}
         res.status(err.statusCode).json(ErrorResponse)
     }

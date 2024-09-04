@@ -45,7 +45,7 @@ async function deleteAirplane(data){
 async function updateAirplane(id,data){
     try{
     const airplane=await airplaneRepository.update(id,data)
-    console.log(airplane)
+    // console.log(airplane)
     if(airplane[0]===0){
         throw new AppError('No such airplane exists',StatusCodes.NOT_FOUND);
     }

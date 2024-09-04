@@ -3,7 +3,7 @@ const { ErrorResponse } = require("../utils/common");
 const AppError = require("../utils/errors/app-error");
 
 const validateAirplaneCreateRequest=(req,res,next)=>{
-    console.log(req.body);
+    // console.log(req.body);
 
     if(!req.body.modelNumber){
 

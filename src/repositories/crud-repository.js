@@ -9,7 +9,7 @@ class CrudRepostory{
 
     async create(data){
         const resp = await this.model.create(data);
-        console.log('inside crud');
+        // console.log('inside crud');
         return resp;
     }
 

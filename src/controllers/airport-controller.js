@@ -40,7 +40,7 @@ async function getAirports(req,res){
 
 const createAirport=async(req,res)=>{
     try{
-        console.log('creating s')
+        // console.log('creating s')
         const airport=await AirportService.createAirport({
             name:req.body.name,
             address:req.body.address,
