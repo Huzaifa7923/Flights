@@ -3,7 +3,6 @@ const { FlightService } = require("../services")
 const {SuccessResponse,ErrorResponse} = require('../utils/common')
 
 const create=async (req,res)=>{
-
     try{
     const flight=await FlightService.create({
         flightNumber:req.body.flightNumber,
@@ -22,7 +21,7 @@ const create=async (req,res)=>{
 }
 }
 
-const createFlights=async(req,res)=>{
+const getFlights=async(req,res)=>{
     try{
         const flights=await FlightService.getFlights(req.query);
         SuccessResponse.data=flights;
@@ -36,5 +35,5 @@ const createFlights=async(req,res)=>{
 }
 module.exports={
     create,
-    createFlights
+    getFlights
 }

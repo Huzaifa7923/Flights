@@ -3,6 +3,6 @@ const {FlightController}=require('../../controllers')
 const {FlightMiddlwares}=require('../../middlewares')
 
 router.post('/',FlightMiddlwares.validateFlightCreateRequest,FlightController.create)
-router.get('/',FlightController.createFlights)
+router.get('/',FlightController.getFlights)
 
 module.exports=router

@@ -15,6 +15,7 @@ const create=async(data)=>{
     }
 }
 
+// http://localhost:3000/api/v1/flights?price=500000&trips=BOM-DEL
 const getFlights=async(query)=>{
 
 
