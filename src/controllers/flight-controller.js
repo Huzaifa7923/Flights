@@ -22,6 +22,19 @@ const create=async (req,res)=>{
 }
 }
 
+const createFlights=async(req,res)=>{
+    try{
+        const flights=await FlightService.getFlights(req.query);
+        SuccessResponse.data=flights;
+
+        res.status(StatusCodes.OK).json(SuccessResponse);
+
+    }catch(err){
+        ErrorResponse.error=err;
+        res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse)
+    }
+}
 module.exports={
-    create
+    create,
+    createFlights
 }

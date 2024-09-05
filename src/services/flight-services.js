@@ -1,6 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
 const {FlightRepository} = require('../repositories');
 const AppError = require('../utils/errors/app-error');
+const {Op} =require('sequelize');
+const { Sequelize } = require('../models');
 
 const flightRepository=new FlightRepository();
 
@@ -13,4 +15,85 @@ const create=async(data)=>{
     }
 }
 
-module.exports={create}
+const getFlights=async(query)=>{
+
+
+    // Sequelize
+
+    // Project.findAll({
+    //     where: {
+    //       name: 'Some Project',
+    //       [Op.operator_koi]: [ ],
+    //     },
+    //  order: [
+    //     ['username', 'DESC'],
+    //   ],
+
+    //   });
+    
+    let customFilter={};// where 
+    let sort_filter=[];//order array
+
+    const endingTripTime = " 23:59:00";
+    if(query.trips){
+        let [departureAirportId, arrivalAirportId]=query.trips.split('-');
+        
+        customFilter.departureAirportId=departureAirportId
+        customFilter.arrivalAirportId=arrivalAirportId
+    }
+    if(query.price){
+        let [minPrice,maxPrice]=query.price.split("-");
+
+        customFilter.price={
+            [Op.between]:[minPrice,((maxPrice==undefined)?200000000:maxPrice)]
+        }
+    }
+
+    if(query.travellers){
+        customFilter.totalSeats={
+        [Op.gte]:query.travellers
+        }
+    }
+
+    if(query.tripDate){
+        customFilter.departureTime={
+            [Op.between]:[query.tripDate,query.tripDate+endingTripTime]
+        }
+    }
+
+    
+
+
+    //SORT 
+    // Foo.findOne({
+    //     order: [
+    //       // will return `username` DESC
+    //       ['username', 'DESC'],
+    //     ]})
+
+    // &sort=price_desc,tripDate_asc,travellers_desc
+    // order:[
+    //     ['',''],
+    //     ['','']
+    // ]
+    if(query.sort){
+        const params=query.sort.split(',')
+        const sort_filters=params.map((param)=>param.split('_'))
+
+        sort_filter=sort_filters
+    }
+
+    console.log(customFilter,sort_filter);
+
+    try{
+        const flights=await flightRepository.getAllFlights(customFilter,sort_filter);
+        return flights;
+    }catch(err){
+        console.log(err);
+        throw new AppError(err.message,StatusCodes.BAD_REQUEST)
+    }
+
+
+}
+
+module.exports={create,getFlights}
