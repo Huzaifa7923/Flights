@@ -33,7 +33,20 @@ const getFlights=async(req,res)=>{
         res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse)
     }
 }
+
+const getFlight=async(req,res)=>{
+    try{
+    const flight=await FlightService.getFlight(req.params.id);
+    SuccessResponse.data=flight;
+    
+    res.status(StatusCodes.OK).json(SuccessResponse);
+    }catch(err){
+        ErrorResponse.error=err;
+        res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse)
+    }
+}
 module.exports={
     create,
-    getFlights
+    getFlights,
+    getFlight
 }
