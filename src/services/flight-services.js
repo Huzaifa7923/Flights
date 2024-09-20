@@ -105,4 +105,15 @@ const getFlight=async(id)=>{
         throw new AppError(err.message,StatusCodes.BAD_REQUEST);
     }
 }
-module.exports={create,getFlights,getFlight}
+
+const updateRemainingSeats=async(data)=>{
+    try{
+        const resp=await flightRepository.updateRemainingSeats(data.id,data.seats,data.dec);
+        console.log(resp);
+        return resp;
+    }catch(err){
+        console.log(err);
+        throw new AppError('Seats are not update',StatusCodes.BAD_REQUEST);
+    }
+}
+module.exports={create,getFlights,getFlight,updateRemainingSeats}

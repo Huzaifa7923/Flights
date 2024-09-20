@@ -45,8 +45,25 @@ const getFlight=async(req,res)=>{
         res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse)
     }
 }
+
+const updateRemainingSeats=async(req,res)=>{
+    try{
+        const resp=await FlightService.updateRemainingSeats({
+            id:req.body.id,
+            seats:req.body.seats,
+            dec:req.body.dec==='0'?0:1
+        })
+        SuccessResponse.data=resp;
+        res.status(StatusCodes.OK).json(SuccessResponse);
+
+    }catch(err){
+        ErrorResponse.error=err;
+        res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse)
+    }
+}
 module.exports={
     create,
     getFlights,
-    getFlight
+    getFlight,
+    updateRemainingSeats
 }

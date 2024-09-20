@@ -34,6 +34,27 @@ function validateFlightCreateRequest(req, res, next) {
     next();
 }
 
+
+function validateUpdateSeats(req,res,next){
+    console.log('middleware')
+    if(!req.body.id){
+        ErrorResponse.message = 'Incorrect details';
+        ErrorResponse.error = new AppError('Flight Id missing', StatusCodes.BAD_REQUEST);
+        return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json(ErrorResponse);
+    }
+    if(!req.body.seats){
+        ErrorResponse.message = 'Incorrect details';
+        ErrorResponse.error = new AppError('Seats missing', StatusCodes.BAD_REQUEST);
+        return res
+                .status(StatusCodes.BAD_REQUEST)
+                .json(ErrorResponse);
+    }
+    next();
+}
+
 module.exports = {
-    validateFlightCreateRequest
+    validateFlightCreateRequest,
+    validateUpdateSeats
 }

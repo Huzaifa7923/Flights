@@ -1,6 +1,6 @@
 const CrudRepostory =require('./crud-repository')
 const {Flight,Airport,Airplane} =require('../models')
-const {Sequelize} =require('sequelize')
+const {Sequelize, where} =require('sequelize')
 class FlightRepository extends CrudRepostory{
     constructor(){
         super(Flight)
@@ -33,6 +33,22 @@ class FlightRepository extends CrudRepostory{
         ]
           });
           return flights;
+    }
+
+    async updateRemainingSeats(id,seats,dec){
+
+        if(dec){
+            const response=await Flight.decrement('totalSeats',{ by : seats, where:{
+                id
+            }})
+            return response;
+        }else{
+            console.log('incrementing')
+            const response=await Flight.increment('totalSeats',{ by : seats, where:{
+                id
+            }})
+            return response;
+        }
     }
 }
 
