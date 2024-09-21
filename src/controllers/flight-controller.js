@@ -51,7 +51,7 @@ const updateRemainingSeats=async(req,res)=>{
         const resp=await FlightService.updateRemainingSeats({
             id:req.body.id,
             seats:req.body.seats,
-            dec:req.body.dec==='0'?0:1
+            dec:req.body.dec== ('0' || 0)?0:1
         })
         SuccessResponse.data=resp;
         res.status(StatusCodes.OK).json(SuccessResponse);

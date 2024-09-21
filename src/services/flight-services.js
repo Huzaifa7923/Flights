@@ -109,10 +109,10 @@ const getFlight=async(id)=>{
 const updateRemainingSeats=async(data)=>{
     try{
         const resp=await flightRepository.updateRemainingSeats(data.id,data.seats,data.dec);
-        console.log(resp);
+        // console.log(resp);
         return resp;
     }catch(err){
-        console.log(err);
+        // console.log(err);
         throw new AppError('Seats are not update',StatusCodes.BAD_REQUEST);
     }
 }
