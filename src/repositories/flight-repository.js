@@ -1,7 +1,7 @@
 const CrudRepostory =require('./crud-repository')
-const {Flight,Airport,Airplane} =require('../models')
-const {Sequelize} =require('sequelize');
-const db= require('../models')
+const {Flight,Airport,Airplane, sequelize} =require('../models')
+const Sequelize =require('sequelize')
+
 class FlightRepository extends CrudRepostory{
     constructor(){
         super(Flight)
@@ -51,12 +51,12 @@ class FlightRepository extends CrudRepostory{
 
     //     return flight;
     // }
-    async updateRemainingSeats(id,seats,dec){
+    async updateRemainingSeats(id,seats,dec=1){
 
-        console.log('seats to dec'+seats);
+        // console.log('seats to dec'+seats);
         
         // pessimistic concurrency control -> using lock
-        console.log(id);
+        // console.log(id);
         return sequelize.transaction(async (t)=>{
             const flight=await Flight.findOne({
                 where:{id},
@@ -68,20 +68,20 @@ class FlightRepository extends CrudRepostory{
                 throw new AppError('Not found using id',StatusCodes.BAD_REQUEST);
             }
             if(dec){
-                const response=await flight.decrement('totalSeats',{ 
+                await flight.decrement('totalSeats',{ 
                     by : seats,
                     transaction:t
                 })
-                return response;
             }else{
                 console.log('incrementing')
-                const response=await flight.increment('totalSeats',{
+                await flight.increment('totalSeats',{
                     by : seats, 
                     transaction:t
                 })
-                return response;
+                
             }
-
+            await flight.reload({ transaction: t });
+            return flight;
         })
     }
 }

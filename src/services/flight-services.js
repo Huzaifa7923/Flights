@@ -112,7 +112,7 @@ const updateRemainingSeats=async(data)=>{
         // console.log(resp);
         return resp;
     }catch(err){
-        // console.log(err);
+        console.log(err);
         throw new AppError('Seats are not update',StatusCodes.BAD_REQUEST);
     }
 }
